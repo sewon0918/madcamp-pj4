@@ -16,9 +16,9 @@ from policy_value_net_numpy import PolicyValueNetNumpy
 
 
 input_from_app = sys.argv[1:]
-model_file = './Omok/pj4/best_policy_10_10_5.model'
+model_file_list = ['./Omok/pj4/best_policy_10_10_5.model', './Omok/pj4/best_policy_8_8_5.model']
 n = 5
-height = width = 10
+length_list = [10, 8]
 
 def parse(inputs):
     p1list = inputs[0].split(',')
@@ -27,7 +27,8 @@ def parse(inputs):
     p2list = inputs[1].split(',')
     for i in range(len(p2list)):
         p2list[i] = int(p2list[i])
-    return (p1list, p2list)
+    map = int(inputs[2])
+    return (p1list, p2list,map)
 
 def makemap(input1, input2):
     result = Board(width = width, height = height, n_in_row = n)
@@ -41,8 +42,10 @@ def makemap(input1, input2):
     result.current_player = 1
     return result
 
-parsed_input1, parsed_input2= parse(input_from_app)
+parsed_input1, parsed_input2, ai= parse(input_from_app)
+width = height = length_list[ai]
 board = makemap(parsed_input1, parsed_input2)
+model_file = model_file_list[ai]
 
 try:
     policy_param = pickle.load(open(model_file, 'rb'))
