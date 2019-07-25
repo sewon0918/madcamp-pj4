@@ -21,24 +21,32 @@ n = 5
 length_list = [10, 8]
 
 def parse(inputs):
-    p1list = inputs[0].split(',')
-    for i in range(len(p1list)):
-        p1list[i] = int(p1list[i])
-    p2list = inputs[1].split(',')
-    for i in range(len(p2list)):
-        p2list[i] = int(p2list[i])
+    if inputs[0] != ' ':
+        p1list = inputs[0].split(',')
+        for i in range(len(p1list)):
+            p1list[i] = int(p1list[i])
+    else:
+        p1list = inputs[0]
+    if inputs[1] != ' ':
+        p2list = inputs[1].split(',')
+        for i in range(len(p2list)):
+            p2list[i] = int(p2list[i])
+    else:
+        p2list = inputs[1]
     map = int(inputs[2])
     return (p1list, p2list,map)
 
 def makemap(input1, input2):
     result = Board(width = width, height = height, n_in_row = n)
     result.init_board(start_player = 0)
-    for i in range(len(input1)):
-        result.states[input1[i]] = 1
-        result.availables.remove(input1[i])
-    for j in range(len(input2)):
-        result.states[input2[j]] = 2
-        result.availables.remove(input2[j])
+    if input1 != ' ':
+        for i in range(len(input1)):
+            result.states[input1[i]] = 1
+            result.availables.remove(input1[i])
+    if input2 != ' ':
+        for j in range(len(input2)):
+            result.states[input2[j]] = 2
+            result.availables.remove(input2[j])
     result.current_player = 1
     return result
 
